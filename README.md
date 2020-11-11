@@ -14,7 +14,7 @@ It's created at the start of the app and passed to SwiftUI views via environment
 
 2. A DestinationView protocol used by SwiftUI Views that can be presented to expose their navigation bar title details.
 
-There's a very detailed write-up on how this came to be and how it was built on [Medium]().
+There's a very detailed write-up on how this came to be and how it was built on [Medium](https://medium.com/double-symmetry/navigating-without-navigationlink-in-swiftui-afd8109f0602).
 
 ## Getting Started
 
