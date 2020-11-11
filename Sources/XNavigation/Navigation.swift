@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 open class Navigation: ObservableObject {
-    let window: UIWindow
+    public let window: UIWindow
 
     public init(window: UIWindow) {
         self.window = window
