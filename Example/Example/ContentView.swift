@@ -19,7 +19,7 @@ struct ContentView: View {
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarTrailing) {
                         Button(action: {
-                            navigation.pushView(AnyView(SettingsView()), title: "Settings", animated: true)
+                            navigation.pushView(AnyView(SettingsView()), animated: true)
                         }) { Image(systemName: "gear") }
                     }
                 }

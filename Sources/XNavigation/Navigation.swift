@@ -20,12 +20,12 @@ open class Navigation: ObservableObject {
         window.rootViewController?.present(viewController, animated: animated)
     }
 
-    public func pushView(_ view: AnyView, title: String, animated: Bool = true) {
+    public func pushView(_ view: AnyView, animated: Bool = true) {
         let controller = DestinationHostingController(rootView: view.environmentObject(self))
-        pushViewController(controller, title: title, animated: animated)
+        pushViewController(controller, animated: animated)
     }
 
-    public func pushViewController(_ viewController: UIViewController, title: String, animated: Bool = true) {
+    public func pushViewController(_ viewController: UIViewController, animated: Bool = true) {
         let nvc = window.rootViewController?.children.first?.children.first as? UINavigationController
         nvc?.pushViewController(viewController, animated: animated)
     }
