@@ -1,4 +1,4 @@
-# XNavigation
+# XNavigation ↣
 
 Take control over navigation in your SwiftUI app. Navigate without using NavigationLink.
 
