@@ -16,6 +16,11 @@ open class Navigation: ObservableObject {
         self.window = window
     }
 
+    public func present(_ view: AnyView, animated: Bool = true) {
+        let controller = DestinationHostingController(rootView: view.environmentObject(self))
+        present(controller, animated: animated)
+    }
+
     public func present(_ viewController: UIViewController, animated: Bool = true) {
         window.rootViewController?.present(viewController, animated: animated)
     }
