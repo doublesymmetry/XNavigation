@@ -19,7 +19,7 @@ struct NavigationBarTitle: ViewModifier {
 
 
 public extension View {
-    public func navigationBarTitle(configuration: NavigationBarTitleConfiguration) -> some View {
+    func navigationBarTitle(configuration: NavigationBarTitleConfiguration) -> some View {
         self.modifier(NavigationBarTitle(configuration: configuration))
     }
 }

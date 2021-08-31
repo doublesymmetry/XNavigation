@@ -16,23 +16,49 @@ open class Navigation: ObservableObject {
         self.window = window
     }
 
-    public func present(_ view: AnyView, animated: Bool = true) {
+    public func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
+        if let modal = window.rootViewController?.presentedViewController {
+            modal.dismiss(animated: animated, completion: completion)
+        } else {
+            window.rootViewController?.dismiss(animated: animated, completion: completion)
+        }
+    }
+
+    public func present<Content: View>(_ view: Content, animated: Bool = true) {
         let controller = DestinationHostingController(rootView: view.environmentObject(self))
         present(controller, animated: animated)
     }
 
     public func present(_ viewController: UIViewController, animated: Bool = true) {
-        window.rootViewController?.present(viewController, animated: animated)
+        DispatchQueue.main.async { [weak self] in
+            if let modal = self?.window.rootViewController?.presentedViewController {
+                modal.present(viewController, animated: animated)
+            } else {
+                self?.window.rootViewController?.present(viewController, animated: animated)
+            }
+        }
     }
 
-    public func pushView(_ view: AnyView, animated: Bool = true) {
+    public func pushView<Content: View>(_ view: Content, animated: Bool = true) {
         let controller = DestinationHostingController(rootView: view.environmentObject(self))
         pushViewController(controller, animated: animated)
     }
 
     public func pushViewController(_ viewController: UIViewController, animated: Bool = true) {
-        let nvc = window.rootViewController?.children.first?.children.first as? UINavigationController
-        nvc?.pushViewController(viewController, animated: animated)
+        var nvc = window.rootViewController?.children.first?.children.first as? UINavigationController
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            if let modal = window.rootViewController?.presentedViewController?.presentedViewController {
+                nvc = modal.children.first as? UINavigationController
+            }
+        } else {
+            if let modal = window.rootViewController?.presentedViewController {
+                nvc = modal.children.first as? UINavigationController
+            }
+        }
+
+        DispatchQueue.main.async {
+            nvc?.pushViewController(viewController, animated: animated)
+        }
     }
 }
-
