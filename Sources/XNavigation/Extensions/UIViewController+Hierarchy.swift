@@ -3,6 +3,7 @@
 //  XNavigation
 //
 //  Created by David Chavez on 31.08.21.
+//  Copyright © 2021 Double Symmetry UG. All rights reserved.
 //
 
 import UIKit
