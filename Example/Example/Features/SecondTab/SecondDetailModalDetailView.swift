@@ -1,5 +1,5 @@
 //
-//  FirstDetailView.swift
+//  SecondDetailModalDetailView.swift
 //  Example
 //
 //  Created by David Chavez on 31.08.21.
@@ -8,10 +8,10 @@
 import SwiftUI
 import XNavigation
 
-struct FirstDetailView: View, DestinationView {
+struct SecondDetailModalDetailView: View, DestinationView {
     @EnvironmentObject var navigation: Navigation
 
-    var navigationBarTitleConfiguration = NavigationBarTitleConfiguration(title: "First Detail", displayMode: .inline)
+    var navigationBarTitleConfiguration = NavigationBarTitleConfiguration(title: "Second Detail Detail", displayMode: .inline)
 
     var body: some View {
         VStack {
@@ -24,8 +24,8 @@ struct FirstDetailView: View, DestinationView {
     }
 }
 
-struct FirstDetailView_Previews: PreviewProvider {
+struct SecondDetailModalDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        FirstDetailView()
+        SecondDetailModalDetailView()
     }
 }

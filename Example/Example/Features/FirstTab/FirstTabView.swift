@@ -12,11 +12,21 @@ struct FirstTabView: View {
     @EnvironmentObject var navigation: Navigation
 
     var body: some View {
-        VStack {
-            Text("First Tab!")
-            Button(action: {
-                navigation.pushView(FirstDetailView(), animated: true)
-            }) { Text("Press to push!") }
+        NavigationView {
+            VStack {
+                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                Button(action: {
+                    navigation.pushView(FirstDetailView(), animated: true)
+                }) { Text("Press to push!") }
+            }
+            .navigationBarTitle("First Tab", displayMode: .large)
+            .toolbar {
+                ToolbarItemGroup(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        navigation.pushView(SettingsView(), animated: true)
+                    }) { Image(systemName: "gear") }
+                }
+            }
         }
     }
 }

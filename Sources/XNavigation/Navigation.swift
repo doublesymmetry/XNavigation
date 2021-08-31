@@ -16,14 +16,6 @@ open class Navigation: ObservableObject {
         self.window = window
     }
 
-    public func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
-        if let modal = window.rootViewController?.presentedViewController {
-            modal.dismiss(animated: animated, completion: completion)
-        } else {
-            window.rootViewController?.dismiss(animated: animated, completion: completion)
-        }
-    }
-
     public func present<Content: View>(_ view: Content, animated: Bool = true) {
         let controller = DestinationHostingController(rootView: view.environmentObject(self))
         present(controller, animated: animated)
@@ -31,28 +23,22 @@ open class Navigation: ObservableObject {
 
     public func present(_ viewController: UIViewController, animated: Bool = true) {
         DispatchQueue.main.async { [weak self] in
-            if let modal = self?.window.rootViewController?.presentedViewController {
-                modal.present(viewController, animated: animated)
+            if let lastPresentedViewController = self?.window.rootViewController?.findLastPresentedViewController() {
+                lastPresentedViewController.present(viewController, animated: animated)
             } else {
                 self?.window.rootViewController?.present(viewController, animated: animated)
             }
         }
     }
 
-    public func pop(animated: Bool = true) {
-        var nvc = window.rootViewController?.children.first?.children.first as? UINavigationController
-
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            if let modal = window.rootViewController?.presentedViewController?.presentedViewController {
-                nvc = modal.children.first as? UINavigationController
-            }
-        } else {
-            if let modal = window.rootViewController?.presentedViewController {
-                nvc = modal.children.first as? UINavigationController
+    public func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
+        DispatchQueue.main.async { [weak self] in
+            if let lastPresentedViewController = self?.window.rootViewController?.findLastPresentedViewController() {
+                lastPresentedViewController.dismiss(animated: animated, completion: completion)
+            } else {
+                self?.window.rootViewController?.dismiss(animated: animated, completion: completion)
             }
         }
-
-        nvc?.popViewController(animated: animated)
     }
 
     public func pushView<Content: View>(_ view: Content, animated: Bool = true) {
@@ -61,20 +47,18 @@ open class Navigation: ObservableObject {
     }
 
     public func pushViewController(_ viewController: UIViewController, animated: Bool = true) {
-        var nvc = window.rootViewController?.children.first?.children.first as? UINavigationController
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            if let modal = window.rootViewController?.presentedViewController?.presentedViewController {
-                nvc = modal.children.first as? UINavigationController
-            }
-        } else {
-            if let modal = window.rootViewController?.presentedViewController {
-                nvc = modal.children.first as? UINavigationController
-            }
-        }
+        let nvc = window.rootViewController?.findNestedUINavigationController()
 
         DispatchQueue.main.async {
             nvc?.pushViewController(viewController, animated: animated)
+        }
+    }
+
+    public func pop(animated: Bool = true) {
+        let nvc = window.rootViewController?.findNestedUINavigationController()
+
+        DispatchQueue.main.async {
+            nvc?.popViewController(animated: animated)
         }
     }
 }

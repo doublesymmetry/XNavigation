@@ -12,11 +12,14 @@ struct SecondTabView: View {
     @EnvironmentObject var navigation: Navigation
     
     var body: some View {
-        VStack {
-            Text("Second Tab!")
-            Button(action: {
-                navigation.present(SecondDetailView())
-            }) { Text("Press to present!") }
+        NavigationView {
+            VStack {
+                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+                Button(action: {
+                    navigation.present(SecondDetailModalView())
+                }) { Text("Press to present!") }
+            }
+            .navigationBarTitle("Second Tab", displayMode: .large)
         }
     }
 }
