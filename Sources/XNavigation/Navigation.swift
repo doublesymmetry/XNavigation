@@ -39,6 +39,22 @@ open class Navigation: ObservableObject {
         }
     }
 
+    public func pop(animated: Bool = true) {
+        var nvc = window.rootViewController?.children.first?.children.first as? UINavigationController
+
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            if let modal = window.rootViewController?.presentedViewController?.presentedViewController {
+                nvc = modal.children.first as? UINavigationController
+            }
+        } else {
+            if let modal = window.rootViewController?.presentedViewController {
+                nvc = modal.children.first as? UINavigationController
+            }
+        }
+
+        nvc?.popViewController(animated: animated)
+    }
+
     public func pushView<Content: View>(_ view: Content, animated: Bool = true) {
         let controller = DestinationHostingController(rootView: view.environmentObject(self))
         pushViewController(controller, animated: animated)
