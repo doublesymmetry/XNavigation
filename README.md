@@ -78,6 +78,24 @@ struct SettingsView: View, DestinationView {
 }
 ```
 
+### Using with SwiftUI Lifecycle
+
+If using with a project that only has a SwiftUI lifecycle, you don't have a SceneDelegate to hook into. For this case we've created a helper `WindowReader` view that will expose the view so you can create your navigation object:
+
+```swift
+@main
+struct ExampleApp: App {
+    var body: some Scene {
+        WindowGroup {
+            WindowReader { window in
+                ExampleView()
+                    .environmentObject(Navigation(window: window!))
+            }
+        }
+    }
+}
+```
+
 ## FAQ
 
 #### Can I present a ViewController - i.e. a SFSafariViewController?
