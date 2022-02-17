@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     func findLastPresentedViewController() -> UIViewController? {
         if let presentedViewController = presentedViewController?.presentedViewController {
-            return self.presentedViewController.findLastPresentedViewController()
+            return self.presentedViewController?.findLastPresentedViewController()
         } else {
             return presentedViewController
         }
